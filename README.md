@@ -1,6 +1,6 @@
 # Project brief
 
-This project includes the packages and babel setup for an express server, and is just meant to make things a little simpler to get up and running with.
+Backend for final project: curated. Curated art site listing top exhibitions in Stockholm. 
 
 # Tech
 Node.js, Express.js, mongoose
@@ -8,7 +8,7 @@ Node.js, Express.js, mongoose
 # View it live
 https://final-project-curated.herokuapp.com/
 
-Endpoints:
+# Endpoints:
 /exhibitions - get, post
 
 /exhibitions/:id - patch, delete
