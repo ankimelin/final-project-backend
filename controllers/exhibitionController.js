@@ -1,37 +1,4 @@
-import express from 'express'
-import bodyParser from 'body-parser'
-import cors from 'cors'
 import mongoose from 'mongoose'
-
-import { Exhibition } from './models/exhibition.js'
-
-// Connects to mongodb
-const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/curated"
-mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
-mongoose.Promise = Promise
-
-// Defines the port the app will run on. 
-// Defaults to 8080, but can be overridden when starting the server. 
-// For example: PORT=9000 npm start
-const port = process.env.PORT || 8080
-const app = express()
-
-// Add middlewares to enable cors and json body parsing
-app.use(cors())
-app.use(bodyParser.json())
-
-app.use((request, response, next) => {
-  if (mongoose.connection.readyState === 1) {
-    next()
-  } else {
-    response.status(503).json({ error: 'Database unavailable' })
-  }
-})
-
-// Defined routes
-app.get('/', (req, res) => {
-  res.send('Curated API')
-})
 
 // Gets exhibitions
 app.get('/exhibitions', async (req, res) => {
@@ -75,10 +42,4 @@ app.delete('/exhibitions/:id', async (req, res) => {
   } catch (err) {
     res.status(404).json({ message: 'Could not find exhibition', path: err.path, value: err.value })
   }
-})
-
-
-// Start the server
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`)
 })
