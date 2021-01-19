@@ -5,3 +5,10 @@ This project includes the packages and babel setup for an express server, and is
 ## Getting started
 
 Install dependencies with `npm install`, then start the server by running `npm run dev`
+
+## View it live
+https://final-project-curated.herokuapp.com/
+
+## Endpoints
+/exhibitions - get, post
+/exhibitions/:id - patch, delete
