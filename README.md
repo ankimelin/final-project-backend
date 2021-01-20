@@ -11,4 +11,4 @@ https://final-project-curated.herokuapp.com/
 # Endpoints:
 /exhibitions - get, post
 
-/exhibitions/:id - patch, delete
+/exhibitions/:id - get, patch, delete
