@@ -39,9 +39,19 @@ app.get('/', (req, res) => {
 app.get('/exhibitions', async (req, res) => {
   try {
     const exhibitions = await Exhibition.find()
-    return res.status(200).json(exhibitions) // fundera på vad returnera
+    return res.status(200).json(exhibitions)
   } catch (err) {
     return res.status(400).json({ message: 'Could not get exhibitions', error: err }) // 400 bad request
+  }
+})
+
+app.get('/exhibitions/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+    const exhibition = await Exhibition.findById({ _id: id })
+    return res.status(200).json(exhibition)
+  } catch (err) {
+    return res.status(404).json({ message: 'Could not get exhibition', path: err.path, value: err.value })
   }
 })
 
@@ -50,9 +60,9 @@ app.post('/exhibitions', async (req, res) => {
   try {
     const { title, artists, museum, startDate, endDate, link, topExhibition } = req.body
     const exhibition = await new Exhibition({ title, artists, museum, startDate, endDate, link, topExhibition }).save()
-    res.status(201).json(exhibition) // fundera på vad returnera
+    return res.status(201).json(exhibition)
   } catch (err) {
-    res.status(400).json({ message: 'Could not create exhibition', error: err.message })
+    return res.status(400).json({ message: 'Could not create exhibition', error: err.message })
   }
 })
 
@@ -62,9 +72,9 @@ app.patch('/exhibitions/:id', async (req, res) => {
     const { id } = req.params
     const { title, museum, artists, startDate, endDate, link, topExhibition } = req.body
     const exhibition = await Exhibition.findByIdAndUpdate({ _id: id }, { title, museum, artists, startDate, endDate, link, topExhibition }, { runValidators: true }) //runValidators validates input, but also makes it forcing having all inputs
-    res.status(202).json(exhibition) // fundera på vad returnera
+    return res.status(202).json(exhibition)
   } catch (err) {
-    res.status(404).json({ message: 'Could not update exhibition', error: err.message }) // 404 not found
+    return res.status(404).json({ message: 'Could not update exhibition', error: err.message }) // 404 not found
   }
 })
 
@@ -73,9 +83,9 @@ app.delete('/exhibitions/:id', async (req, res) => {
   try {
     const { id } = req.params
     const exhibition = await Exhibition.findByIdAndDelete({ _id: id })
-    res.status(200).json(exhibition) // fundera på vad returnera
+    return res.status(200).json(exhibition)
   } catch (err) {
-    res.status(404).json({ message: 'Could not delete exhibition', path: err.path, value: err.value })
+    return res.status(404).json({ message: 'Could not delete exhibition', path: err.path, value: err.value })
   }
 })
 
