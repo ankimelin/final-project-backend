@@ -45,6 +45,7 @@ app.get('/exhibitions', async (req, res) => {
   }
 })
 
+// Gets exhibition
 app.get('/exhibitions/:id', async (req, res) => {
   try {
     const { id } = req.params
