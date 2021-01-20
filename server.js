@@ -13,7 +13,7 @@ mongoose.Promise = Promise
 // Defines the port the app will run on. 
 // Defaults to 8080, but can be overridden when starting the server. 
 // For example: PORT=9000 npm start
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 8082
 const app = express()
 
 // Add middlewares to enable cors and json body parsing
@@ -33,11 +33,13 @@ app.get('/', (req, res) => {
   res.send('Curated API')
 })
 
+//*** EXHIBITIONS ROUTES */
+
 // Gets exhibitions
 app.get('/exhibitions', async (req, res) => {
   try {
     const exhibitions = await Exhibition.find()
-    return res.status(200).json(exhibitions) // add sorting? 200 OK
+    return res.status(200).json(exhibitions) // fundera på vad returnera
   } catch (err) {
     return res.status(400).json({ message: 'Could not get exhibitions', error: err }) // 400 bad request
   }
@@ -46,9 +48,9 @@ app.get('/exhibitions', async (req, res) => {
 // Creates exhibition
 app.post('/exhibitions', async (req, res) => {
   try {
-    const { title, artists, museum, startDate, endDate, link } = req.body
-    const exhibition = await new Exhibition({ title, artists, museum, startDate, endDate, link }).save()
-    res.status(201).json(exhibition) // 201 created
+    const { title, artists, museum, startDate, endDate, link, topExhibition } = req.body
+    const exhibition = await new Exhibition({ title, artists, museum, startDate, endDate, link, topExhibition }).save()
+    res.status(201).json(exhibition) // fundera på vad returnera
   } catch (err) {
     res.status(400).json({ message: 'Could not create exhibition', error: err.message })
   }
@@ -58,11 +60,11 @@ app.post('/exhibitions', async (req, res) => {
 app.patch('/exhibitions/:id', async (req, res) => {
   try {
     const { id } = req.params
-    const { title, museum, artists, startDate, endDate, link } = req.body
-    const exhibition = await Exhibition.updateOne({ _id: id }, { title, museum, artists, startDate, endDate, link }, { runValidators: true })
-    res.status(202).json(exhibition) // 202 Accepted - ok to use here or should be 200 OK or 201 Created?
+    const { title, museum, artists, startDate, endDate, link, topExhibition } = req.body
+    const exhibition = await Exhibition.findByIdAndUpdate({ _id: id }, { title, museum, artists, startDate, endDate, link, topExhibition }, { runValidators: true }) //runValidators validates input, but also makes it forcing having all inputs
+    res.status(202).json(exhibition) // fundera på vad returnera
   } catch (err) {
-    res.status(404).json({ message: 'Could not find exhibition', error: err.message }) // 404 not found
+    res.status(404).json({ message: 'Could not update exhibition', error: err.message }) // 404 not found
   }
 })
 
@@ -70,13 +72,12 @@ app.patch('/exhibitions/:id', async (req, res) => {
 app.delete('/exhibitions/:id', async (req, res) => {
   try {
     const { id } = req.params
-    const exhibition = await Exhibition.deleteOne({ _id: id })
-    res.status(200).json(exhibition)
+    const exhibition = await Exhibition.findByIdAndDelete({ _id: id })
+    res.status(200).json(exhibition) // fundera på vad returnera
   } catch (err) {
-    res.status(404).json({ message: 'Could not find exhibition', path: err.path, value: err.value })
+    res.status(404).json({ message: 'Could not delete exhibition', path: err.path, value: err.value })
   }
 })
-
 
 // Start the server
 app.listen(port, () => {

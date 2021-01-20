@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 
 // Mongoose schema 
 const exhibitionSchema = new mongoose.Schema({
@@ -26,6 +26,11 @@ const exhibitionSchema = new mongoose.Schema({
   link: {
     type: String,
     required: true
+  },
+  topExhibition: {
+    type: Boolean,
+    required: false,
+    default: false
   }
 }, { timestamps: true })
 
