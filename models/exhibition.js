@@ -1,31 +1,34 @@
-import mongoose, { Schema } from 'mongoose'
+import mongoose from 'mongoose'
 
 // Mongoose schema 
 const exhibitionSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true
+    required: [true, 'Title required']
   },
   artists: {
     type: Array,
     required: false
   },
-  museum: {
+  place: {
     type: String,
-    enum: ['Moderna Museet', 'ArkDes', 'Fotografiska', 'Sven-Harrys', 'Bonniers Konsthall', 'Färgfabriken', 'Marabouparken'],
-    required: true
+    enum: {
+      values: ['Moderna Museet', 'ArkDes', 'Fotografiska', 'Sven-Harrys', 'Bonniers Konsthall', 'Färgfabriken', 'Marabouparken'],
+      message: 'Choose predefined value'
+    },
+    required: [true, 'Place required']
   },
   startDate: {
     type: Date,
-    required: true
+    required: [true, 'Start date required']
   },
   endDate: {
     type: Date,
-    required: true
+    required: [true, 'End date requried']
   },
   link: {
     type: String,
-    required: true
+    required: [true, 'Link required']
   },
   topExhibition: {
     type: Boolean,
