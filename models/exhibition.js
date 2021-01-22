@@ -1,6 +1,5 @@
 import mongoose from 'mongoose'
 
-// Mongoose schema 
 const exhibitionSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -37,5 +36,4 @@ const exhibitionSchema = new mongoose.Schema({
   }
 }, { timestamps: true })
 
-// Mongoose model
 export const Exhibition = mongoose.model('Exhibition', exhibitionSchema)
