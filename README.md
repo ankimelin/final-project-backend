@@ -2,8 +2,10 @@
 
 Backend for final project: curated. Curated art site listing top exhibitions in Stockholm. 
 
+Frontend: https://github.com/ankimelin/final-project-frontend
+
 # Tech
-Node.js, Express.js, mongoose
+Node.js, Express.js, Mongoose
 
 # View it live
 https://final-project-curated.herokuapp.com/
