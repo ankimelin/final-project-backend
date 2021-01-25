@@ -2,7 +2,11 @@ import express from 'express'
 
 import { Exhibition } from '../models/exhibition.js'
 
-const ERROR_MESSAGE_404 = 'Could not find exhibition'
+const ERROR_MESSAGE_GET_ALL = 'Could not get exhibitions'
+const ERROR_MESSAGE_CREATE = 'Could not create exhibition'
+const ERROR_MESSAGE_GET_ONE = 'Could not get exhibition'
+const ERROR_MESSAGE_UPDATE = 'Could not update exhibition'
+const ERROR_MESSAGE_DELETE = 'Could not delete exhibition'
 
 export const exhibitions = express.Router()
 
@@ -12,7 +16,7 @@ exhibitions.route('/')
       const exhibitions = await Exhibition.find()
       return res.status(200).json(exhibitions)
     } catch (err) {
-      return res.status(400).json({ message: 'Could not get exhibitions', error: err })
+      return res.status(400).json({ ERROR_MESSAGE_GET_ALL, error: err })
     }
   })
   .post(async (req, res) => {
@@ -21,26 +25,26 @@ exhibitions.route('/')
       const exhibition = await new Exhibition({ title, artists, place, startDate, endDate, link, topExhibition }).save()
       return res.status(200).json(exhibition)
     } catch (err) {
-      return res.status(400).json({ message: 'Could not create exhibition', error: err.message })
+      return res.status(400).json({ message: ERROR_MESSAGE_CREATE, error: err })
     }
   })
 
 exhibitions.route('/:id')
   .get(async (req, res) => {
-    const { id } = req.params
     try {
-      const exhibition = await Exhibition.findById({ _id: id })
+      const { id } = req.params
+      const exhibition = await Exhibition.findById(id)
       return res.status(200).json(exhibition)
     } catch (err) {
-      return res.status(404).json({ message: ERROR_MESSAGE_404, id })
+      return res.status(400).json({ message: ERROR_MESSAGE_GET_ONE, error: err })
     }
   })
   .patch(async (req, res) => {
-    const { id } = req.params
     try {
-      const exhibition = await Exhibition.findById({ _id: id })
+      const { id } = req.params
+      const exhibition = await Exhibition.findById(id)
       const {
-        title = exhibition.title, // chooses default value exhibition.title to pass in if title is not passed in
+        title = exhibition.title,
         place = exhibition.place,
         artists = exhibition.artists,
         startDate = exhibition.startDate,
@@ -48,23 +52,18 @@ exhibitions.route('/:id')
         link = exhibition.link,
         topExhibition = exhibition.topExhibition
       } = req.body
-      const updatedExhibition = await Exhibition.findByIdAndUpdate({ _id: id }, { title, place, artists, startDate, endDate, link, topExhibition }, { runValidators: true })
-      return res.status(202).json(updatedExhibition) // returns the found object before the update
+      const updatedExhibition = await Exhibition.findByIdAndUpdate(id, { title, place, artists, startDate, endDate, link, topExhibition }, { runValidators: true })
+      return res.status(200).json(updatedExhibition) // returns the found object before the update
     } catch (err) {
-      try {
-        await Exhibition.findById({ _id: id }) // id is matching, the model validation is off
-        return res.status(400).json({ message: 'Could not update exhibition', error: err.message })
-      } catch (err) { // id is not matching, the validation can be either right or wrong
-        return res.status(404).json({ message: ERROR_MESSAGE_404, id })
-      }
+      return res.status(400).json({ message: ERROR_MESSAGE_UPDATE, error: err })
     }
   })
   .delete(async (req, res) => {
-    const { id } = req.params
     try {
-      const exhibition = await Exhibition.findByIdAndDelete({ _id: id })
+      const { id } = req.params
+      const exhibition = await Exhibition.findByIdAndDelete(id)
       return res.status(200).json(exhibition)
     } catch (err) {
-      return res.status(404).json({ message: ERROR_MESSAGE_404, id })
+      return res.status(400).json({ message: ERROR_MESSAGE_DELETE, error: err })
     }
   })
