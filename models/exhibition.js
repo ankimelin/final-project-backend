@@ -9,7 +9,7 @@ const exhibitionSchema = new mongoose.Schema({
     type: Array,
     required: false
   },
-  place: {
+  museum: {
     type: String,
     enum: {
       values: ['Moderna Museet', 'ArkDes', 'Fotografiska', 'Sven-Harrys', 'Bonniers Konsthall', 'Färgfabriken', 'Marabouparken'],
