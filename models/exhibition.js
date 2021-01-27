@@ -33,10 +33,6 @@ const exhibitionSchema = new mongoose.Schema({
     type: Boolean,
     required: false,
     default: false
-  },
-  slug: {
-    type: String,
-    required: true
   }
 }, { timestamps: true })
 
