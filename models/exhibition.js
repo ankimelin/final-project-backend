@@ -12,8 +12,7 @@ const exhibitionSchema = new mongoose.Schema({
   museum: {
     type: String,
     enum: {
-      values: ['Moderna Museet', 'ArkDes', 'Fotografiska', 'Sven-Harrys', 'Bonniers Konsthall', 'Färgfabriken', 'Marabouparken'], // add magasin 3, email moderna, arkdes and marabouparken
-      message: 'Choose predefined value' // does it ever go here?
+      values: ['Sven-Harrys Konstmuseum', 'Bonniers Konsthall', 'Färgfabriken', 'Waldemarsudde', 'Magasin III']
     },
     required: [true, 'Museum required']
   },
