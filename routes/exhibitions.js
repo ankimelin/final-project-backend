@@ -21,8 +21,8 @@ exhibitions.route('/')
   })
   .post(async (req, res) => {
     try {
-      const { title, artists, place, startDate, endDate, link, topExhibition } = req.body
-      const exhibition = await new Exhibition({ title, artists, place, startDate, endDate, link, topExhibition }).save()
+      const { title, artists, museum, startDate, endDate, link, topExhibition } = req.body
+      const exhibition = await new Exhibition({ title, artists, museum, startDate, endDate, link, topExhibition }).save()
       return res.status(200).json(exhibition)
     } catch (err) {
       return res.status(400).json({ message: ERROR_MESSAGE_CREATE, error: err })
