@@ -21,8 +21,8 @@ exhibitions.route('/')
   })
   .post(async (req, res) => {
     try {
-      const { title, artists, museum, startDate, endDate, link, topExhibition } = req.body
-      const exhibition = await new Exhibition({ title, artists, museum, startDate, endDate, link, topExhibition }).save()
+      const { title, artists, museum, startDate, endDate, link, image, imageText, topExhibition } = req.body
+      const exhibition = await new Exhibition({ title, artists, museum, startDate, endDate, link, image, imageText, topExhibition }).save()
       return res.status(200).json(exhibition)
     } catch (err) {
       return res.status(400).json({ message: ERROR_MESSAGE_CREATE, error: err })
@@ -53,10 +53,12 @@ exhibitions.route('/:id')
         startDate = exhibition.startDate,
         endDate = exhibition.endDate,
         link = exhibition.link,
+        image = exhibition.image,
+        imageText = exhibition.imageText,
         topExhibition = exhibition.topExhibition
       } = req.body
       const updatedExhibition = await Exhibition.findByIdAndUpdate(id,
-        { title, place, artists, startDate, endDate, link, topExhibition },
+        { title, place, artists, startDate, endDate, link, image, imageText, topExhibition },
         { runValidators: true, new: true })
       return res.status(200).json(updatedExhibition)
     } catch (err) {

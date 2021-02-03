@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+// import { Review } from './review'
 
 const exhibitionSchema = new mongoose.Schema({
   title: {
@@ -28,11 +29,36 @@ const exhibitionSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Link required']
   },
+  image: {
+    type: String,
+    required: [true, 'Image link required']
+  },
+  imageText: {
+    type: String,
+    required: [true, 'Image text required']
+  },
   topExhibition: {
     type: Boolean,
     required: false,
     default: false
-  }
+  },
+  // reviews: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Review'
+  // }
 }, { timestamps: true })
 
 export const Exhibition = mongoose.model('Exhibition', exhibitionSchema)
+
+// const reviewSchema = new mongoose.Schema({
+//   author: {
+//     type: String,
+//     required: true
+//   },
+//   review: {
+//     type: String,
+//     required: true
+//   }
+// }, { timestamps: true })
+
+// export const Review = mongoose.model('Review', reviewSchema)
