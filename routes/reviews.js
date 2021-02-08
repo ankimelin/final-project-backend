@@ -1,7 +1,7 @@
 import express from 'express'
 
 import { Exhibition } from '../models/exhibition.js'
-import { Review } from '../models/exhibition.js'
+import { Review } from '../models/review.js'
 
 const ERROR_MESSAGE_GET_ALL = 'Could not get reviews'
 const ERROR_MESSAGE_CREATE = 'Could not create review'

@@ -13,7 +13,7 @@ mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.Promise = Promise
 
 // Defines the port the app will run on
-const port = process.env.PORT || 8085
+const port = process.env.PORT || 8086
 // Creates an instance of express, which is needed to start the server and create API endpoints
 const app = express()
 
