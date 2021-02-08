@@ -1,5 +1,6 @@
 import express from 'express'
 
+import { Exhibition } from '../models/exhibition.js'
 import { Review } from '../models/exhibition.js'
 
 const ERROR_MESSAGE_GET_ALL = 'Could not get reviews'
@@ -10,11 +11,11 @@ const ERROR_MESSAGE_DELETE = 'Could not delete review'
 
 export const reviews = express.Router()
 
-reviews.route('/')
+reviews.route('/:exhibitionId/reviews')
   .get(async (req, res) => {
     try {
       const { exhibitionId } = req.params
-      const reviews = await Review.find({ exhibitionId })
+      const reviews = await Review.find({ exhibitionId: exhibitionId })
       return res.status(200).json(reviews)
     } catch (err) {
       return res.status(400).json({ ERROR_MESSAGE_GET_ALL, error: err })
@@ -33,7 +34,7 @@ reviews.route('/')
     }
   })
 
-reviews.route('/:reviewId')
+reviews.route('/:exhibitionId/reviews/:reviewId')
   .get(async (req, res) => {
     try {
       const { exhibitionId, reviewId } = req.params

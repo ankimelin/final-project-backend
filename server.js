@@ -5,6 +5,7 @@ import mongoose from 'mongoose'
 
 import { exhibitions } from './routes/exhibitions.js'
 import { reviews } from './routes/reviews.js'
+import { museums } from './routes/museums.js'
 
 // Connects to mongodb
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/curated"
@@ -12,7 +13,7 @@ mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.Promise = Promise
 
 // Defines the port the app will run on
-const port = process.env.PORT || 8082
+const port = process.env.PORT || 8085
 // Creates an instance of express, which is needed to start the server and create API endpoints
 const app = express()
 
@@ -35,7 +36,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/exhibitions', exhibitions)
-app.use('/exhibitions/:exhibitionId/reviews', reviews)
+app.use('/exhibitions', reviews)
+app.use('/museums', museums)
 
 // Starts the server
 app.listen(port, () => {

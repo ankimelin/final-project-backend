@@ -1,5 +1,22 @@
 import mongoose from 'mongoose'
-// import { Review } from './review'
+
+const reviewSchema = new mongoose.Schema({
+  author: {
+    type: String,
+    required: [true, 'Author required']
+  },
+  text: {
+    type: String,
+    required: [true, 'Text required']
+  },
+  exhibitionId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Exhibition',
+    required: true
+  }
+}, { timestamps: true })
+
+export const Review = mongoose.model('Review', reviewSchema)
 
 const exhibitionSchema = new mongoose.Schema({
   title: {
@@ -12,9 +29,7 @@ const exhibitionSchema = new mongoose.Schema({
   },
   museum: {
     type: String,
-    enum: {
-      values: ['Sven-Harrys Konstmuseum', 'Bonniers Konsthall', 'Färgfabriken', 'Waldemarsudde', 'Magasin III']
-    },
+    enum: ['Sven-Harrys Konstmuseum', 'Bonniers Konsthall', 'Färgfabriken', 'Waldemarsudde', 'Magasin III'],
     required: [true, 'Museum required']
   },
   startDate: {
@@ -49,21 +64,3 @@ const exhibitionSchema = new mongoose.Schema({
 }, { timestamps: true })
 
 export const Exhibition = mongoose.model('Exhibition', exhibitionSchema)
-
-const reviewSchema = new mongoose.Schema({
-  author: {
-    type: String,
-    required: [true, 'Author required']
-  },
-  text: {
-    type: String,
-    required: [true, 'Text required']
-  },
-  exhibitionId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Exhibition',
-    required: true
-  }
-}, { timestamps: true })
-
-export const Review = mongoose.model('Review', reviewSchema)
