@@ -4,6 +4,7 @@ import cors from 'cors'
 import mongoose from 'mongoose'
 
 import { exhibitions } from './routes/exhibitions.js'
+import { reviews } from './routes/reviews.js'
 
 // Connects to mongodb
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/curated"
@@ -34,6 +35,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/exhibitions', exhibitions)
+app.use('/exhibitions/:exhibitionId/reviews', reviews)
 
 // Starts the server
 app.listen(port, () => {

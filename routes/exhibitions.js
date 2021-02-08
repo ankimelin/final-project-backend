@@ -29,11 +29,11 @@ exhibitions.route('/')
     }
   })
 
-exhibitions.route('/:id')
+exhibitions.route('/:exhibitionId')
   .get(async (req, res) => {
     try {
-      const { id } = req.params
-      const exhibition = await Exhibition.findById(id)
+      const { exhibitionId } = req.params
+      const exhibition = await Exhibition.findById(exhibitionId)
       return res.status(200).json(exhibition)
     } catch (err) {
       return res.status(400).json({ message: ERROR_MESSAGE_GET_ONE, error: err })
@@ -41,8 +41,8 @@ exhibitions.route('/:id')
   })
   .patch(async (req, res) => {
     try {
-      const { id } = req.params
-      const exhibition = await Exhibition.findById(id)
+      const { exhibitionId } = req.params
+      const exhibition = await Exhibition.findById(exhibitionId)
       // validation should be there for updates, hence added runValidators: true
       // this makes all required fields needed when updating, even though I only want to update one value
       // what is after "=" is the default excisting value sent in, which is overwritten by what is sent in the req body
@@ -57,7 +57,7 @@ exhibitions.route('/:id')
         imageText = exhibition.imageText,
         topExhibition = exhibition.topExhibition
       } = req.body
-      const updatedExhibition = await Exhibition.findByIdAndUpdate(id,
+      const updatedExhibition = await Exhibition.findByIdAndUpdate(exhibitionId,
         { title, place, artists, startDate, endDate, link, image, imageText, topExhibition },
         { runValidators: true, new: true })
       return res.status(200).json(updatedExhibition)
@@ -67,8 +67,8 @@ exhibitions.route('/:id')
   })
   .delete(async (req, res) => {
     try {
-      const { id } = req.params
-      const exhibition = await Exhibition.findByIdAndDelete(id)
+      const { exhibitionId } = req.params
+      const exhibition = await Exhibition.findByIdAndDelete(exhibitionId)
       return res.status(200).json(exhibition)
     } catch (err) {
       return res.status(400).json({ message: ERROR_MESSAGE_DELETE, error: err })

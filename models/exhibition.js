@@ -42,23 +42,28 @@ const exhibitionSchema = new mongoose.Schema({
     required: false,
     default: false
   },
-  // reviews: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Review'
-  // }
+  reviews: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Review'
+  }]
 }, { timestamps: true })
 
 export const Exhibition = mongoose.model('Exhibition', exhibitionSchema)
 
-// const reviewSchema = new mongoose.Schema({
-//   author: {
-//     type: String,
-//     required: true
-//   },
-//   review: {
-//     type: String,
-//     required: true
-//   }
-// }, { timestamps: true })
+const reviewSchema = new mongoose.Schema({
+  author: {
+    type: String,
+    required: [true, 'Author required']
+  },
+  text: {
+    type: String,
+    required: [true, 'Text required']
+  },
+  exhibitionId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Exhibition',
+    required: true
+  }
+}, { timestamps: true })
 
-// export const Review = mongoose.model('Review', reviewSchema)
+export const Review = mongoose.model('Review', reviewSchema)
