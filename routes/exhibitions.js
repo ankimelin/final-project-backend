@@ -21,8 +21,8 @@ exhibitions.route('/')
   })
   .post(async (req, res) => {
     try {
-      const { title, artists, museum, startDate, endDate, link, image, imageText, topExhibition } = req.body
-      const exhibition = await new Exhibition({ title, artists, museum, startDate, endDate, link, image, imageText, topExhibition }).save()
+      const { title, museum, artists, startDate, endDate, link, image, imageText, topExhibition } = req.body
+      const exhibition = await new Exhibition({ title, museum, artists, startDate, endDate, link, image, imageText, topExhibition }).save()
       return res.status(200).json(exhibition)
     } catch (err) {
       return res.status(400).json({ message: ERROR_MESSAGE_CREATE, error: err })
@@ -48,7 +48,7 @@ exhibitions.route('/:exhibitionId')
       // what is after "=" is the default excisting value sent in, which is overwritten by what is sent in the req body
       const {
         title = exhibition.title,
-        place = exhibition.place,
+        museum = exhibition.museum,
         artists = exhibition.artists,
         startDate = exhibition.startDate,
         endDate = exhibition.endDate,
@@ -58,7 +58,7 @@ exhibitions.route('/:exhibitionId')
         topExhibition = exhibition.topExhibition
       } = req.body
       const updatedExhibition = await Exhibition.findByIdAndUpdate(exhibitionId,
-        { title, place, artists, startDate, endDate, link, image, imageText, topExhibition },
+        { title, museum, artists, startDate, endDate, link, image, imageText, topExhibition },
         { runValidators: true, new: true })
       return res.status(200).json(updatedExhibition)
     } catch (err) {
