@@ -7,7 +7,7 @@ const exhibitionSchema = new mongoose.Schema({
   },
   artists: {
     type: Array,
-    required: false
+    required: [true, 'Artist/artists required']
   },
   museum: {
     type: String,
