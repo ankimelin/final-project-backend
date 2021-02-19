@@ -1,11 +1,12 @@
 # Project brief
 
 Backend for final project: curated. Curated art site listing top exhibitions in Stockholm. 
+Final project done during 4 weeks on 50% time.
 
 Frontend: https://github.com/ankimelin/final-project-frontend
 
 # Tech
-Node.js, Express.js, Mongoose
+Node.js, Express.js, Mongoose, MongoDB
 
 # View it live
 https://final-project-curated.herokuapp.com/
